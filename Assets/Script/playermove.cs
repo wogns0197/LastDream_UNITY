@@ -7,9 +7,9 @@ public class playermove : MonoBehaviour
 {
     public float maxspeed,jumpPower,time;
     public GameObject topbar,topdiamond,huddle;
-    public int life; // 게임디렉터에 넣기에 애매함.
-    private int downingflag;
-    bool supermode,isJumping,isDowning;
+    public int life; // 게임디렉터에 넣기에 애매함.    
+    bool supermode;
+    private int jumpnum;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
@@ -19,10 +19,8 @@ public class playermove : MonoBehaviour
     	jumpPower = 60f;
         life = 3;
         time = 0;
-        downingflag=0;
+        jumpnum = 0;
         supermode = false;
-        isJumping = false;
-        isDowning = false;
         huddle.GetComponent<BoxCollider2D>().enabled=true;        
     }
 
@@ -40,39 +38,56 @@ public class playermove : MonoBehaviour
     {
         time += Time.deltaTime;
         if(supermode){ // life 하나 사라졌을 때 2초동안 무적 유지
-            if(time >2f){
-                huddle.GetComponent<BoxCollider2D>().enabled=true;
+            if(time >2f){ // 무적 끝
+                GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= false;
                 supermode=false;
                 time = 0;
                 this.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
             }
+            else{
+                GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= true;
+            }   
         }
         //Jump
         
         if (Input.GetButtonDown("Jump")){
             if(this.transform.position.y > -3f){//밑으로 떨어질 시 점프 불가 지면위에 있을때 y = -1.984775
-                
-                if(! isJumping){
-                    isJumping = true;
-                    rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-                    anim.SetBool("is jumping", true);    
-                }
-                else{
-                    if( rigid.velocity.y<-5f && downingflag==1){
-                        anim.SetBool("is jumping", false);       
-                        rigid.AddForce(Vector2.up * jumpPower*1.4f, ForceMode2D.Impulse);
-                        anim.SetBool("is jumping", true);       
-                        downingflag++;
+                if(jumpnum <2){
+                    if(jumpnum==0){
+                        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+                        anim.SetBool("is jumping", true);    
+                        jumpnum++;    
+                    }
+                    else{
+                        rigid.AddForce(Vector2.up * jumpPower *0.9f, ForceMode2D.Impulse);
+                        anim.SetBool("is jumping", true);    
+                        jumpnum++;
                     }
                 }
+                
+                
+
+                // 떨어질 때쯤 점프 한번 더 할 수 있는 코드
+                // if(! isJumping){ 
+                //     isJumping = true;
+                //     rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+                //     anim.SetBool("is jumping", true);    
+                // }
+                // else{
+                //     if( rigid.velocity.y<-5f && downingflag==1){
+                //         anim.SetBool("is jumping", false);       
+                //         rigid.AddForce(Vector2.up * jumpPower*1.4f, ForceMode2D.Impulse);
+                //         anim.SetBool("is jumping", true);       
+                //         downingflag++;
+                //     }
+                // }
             }            
         }
 
         //추가한코드 --> 속력말고 좌표로 나중에 수정하기
-        if (Mathf.Abs(rigid.velocity.y) == 0){
-            isJumping = false;
-            downingflag=1;
+        if (Mathf.Abs(rigid.velocity.y) == 0){        
             anim.SetBool("is jumping", false);
+            jumpnum=0;
         }
         // if( < 0){
         //     isDowning=true;
@@ -96,7 +111,7 @@ public class playermove : MonoBehaviour
         //밑으로 떨어지면 gameover!
         if(this.transform.position.y < -5f){
             // SceneManager.LoadScene("GameOver");
-            GotoBack(this.transform.position, null);
+            GotoBack(this.transform.position);
             lifeminus(life--);
         }
         //topbar , 바 원래 포지션 -17.55 에서 0으로 까지의 거리 / 전체 맵 길이 222 = 0.079054054054054
@@ -139,9 +154,9 @@ public class playermove : MonoBehaviour
     }
 
     
-    void GotoBack(Vector3 pos,GameObject col_huddle){
+    void GotoBack(Vector3 pos){
         this.transform.position = new Vector3( pos.x-5f, 1f, pos.z);
-        if(col_huddle!=null){col_huddle.GetComponent<BoxCollider2D>().enabled=false;}
+        // if(col_huddle!=null){col_huddle.GetComponent<BoxCollider2D>().enabled=false;}
         supermode = true;
         time = 0;
         this.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);                
@@ -159,7 +174,7 @@ public class playermove : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other){        
         if(other.gameObject.tag == "huddle"){
             Destroy(other.gameObject);
-            GotoBack(this.transform.position, other.gameObject);
+            GotoBack(this.transform.position);
             lifeminus(life--);                    
             // GotoBack(this.transform.position);
         }
@@ -169,19 +184,10 @@ public class playermove : MonoBehaviour
     public void jump(){
         //점프 버튼용 함수
         if(this.transform.position.y > -2f){//밑으로 떨어질 시 점프 불가 지면위에 있을때 y = -1.984775            
-            if(! isJumping){
-                isJumping = true;
-                rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-                anim.SetBool("is jumping", true);    
-            }
-            else{
-                if( rigid.velocity.y<-5f && downingflag==1){
-                    anim.SetBool("is jumping", false);       
-                    rigid.AddForce(Vector2.up * jumpPower*1.4f, ForceMode2D.Impulse);
-                    anim.SetBool("is jumping", true);       
-                    downingflag++;
-                }
-            }
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetBool("is jumping", true);    
+            
+            
         }  
     }
 

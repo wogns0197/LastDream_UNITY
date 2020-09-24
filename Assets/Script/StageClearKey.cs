@@ -5,15 +5,12 @@ using UnityEngine;
 public class StageClearKey : MonoBehaviour
 {
     public float time,z_rotation;
-    int opacity,opa_bool;
     public GameObject key,effect;
 
     void Start()
     {
         time=0;
-        z_rotation = 0;
-        opacity = 0;
-        opa_bool=1;
+        z_rotation = 0;        
     }
 
     
