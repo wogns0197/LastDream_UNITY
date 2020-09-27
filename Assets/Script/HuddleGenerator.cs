@@ -5,7 +5,7 @@ using UnityEngine;
 public class HuddleGenerator : MonoBehaviour
 {
     
-    public float time;
+    float time;
     public GameObject huddle_prefab;
     public float huddle_speed=0.02f; 
 

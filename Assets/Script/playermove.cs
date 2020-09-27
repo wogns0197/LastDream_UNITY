@@ -124,8 +124,7 @@ public class playermove : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.Q)){
-            GameoverCoin.dead_pos = this.transform.position.x+5f;
-            SceneManager.LoadScene("GameOver");
+            lifeminus(life--);
         }
 
     }
@@ -163,9 +162,9 @@ public class playermove : MonoBehaviour
     }   
     void lifeminus(int num){
         if(num==3){GameObject.Find("top_hart3").SetActive(false);}
-        if(num==2){GameObject.Find("top_hart2").SetActive(false);}
-        if(num==1){GameObject.Find("top_hart").SetActive(false);}
-        if(num==0){
+        else if(num==2){GameObject.Find("top_hart2").SetActive(false);}
+        else if(num==1){GameObject.Find("top_hart").SetActive(false);}
+        else if(num==0){
             SceneManager.LoadScene("GameOver");
            GameoverCoin.dead_pos = this.transform.position.x+5f;
         }
