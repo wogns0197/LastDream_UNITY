@@ -1,6 +1,8 @@
 # LastDream_UNITY
 20.09.16 start
 
+  (!) 버튼 q는 테스트용 버튼 !
+  
 - 200921
   1) 허들충돌 버그 픽스
   2) 플레이어 y좌표 미세변경 수정 --> 발에 Boxcollider 추가
@@ -13,5 +15,5 @@
 - 200927
   1) 라이프 감소시 빈하트로 표시 --> heart- 위에 heart+ 얹어놓은 상태에서 heart+ setActive(disable)
   2) 클리어씬 효과 opcaity +-
-  (!) 버튼 q는 테스트용 버튼 !
+
   
