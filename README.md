@@ -16,4 +16,5 @@
   1) 라이프 감소시 빈하트로 표시 --> heart- 위에 heart+ 얹어놓은 상태에서 heart+ setActive(disable)
   2) 클리어씬 효과 opcaity +-
 
-  
+-201009
+  1) 맵 전체에 코인설치, 허들 생성기 총 다섯군데 
