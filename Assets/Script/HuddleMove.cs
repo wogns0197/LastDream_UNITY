@@ -5,7 +5,7 @@ using UnityEngine;
 public class HuddleMove : MonoBehaviour
 {
     public float MoveSpeed;
-    float[] huddlegenpos = {1,54f,109f,180f,217f};
+    float[] huddlegenpos = {1,54f,109f,180f,217f,268f,364f};
     void Start()
     {
         MoveSpeed = GameObject.Find("HuddleGenerator").GetComponent<HuddleGenerator>().huddle_speed;
@@ -33,6 +33,12 @@ public class HuddleMove : MonoBehaviour
                 Destroy(gameObject);
             }
             if(this.transform.position.x >huddlegenpos[4] && this.transform.position.x< huddlegenpos[4]+0.5f){
+                Destroy(gameObject);
+            }
+            if(this.transform.position.x >huddlegenpos[5] && this.transform.position.x< huddlegenpos[5]+0.5f){
+                Destroy(gameObject);
+            }
+            if(this.transform.position.x >huddlegenpos[6] && this.transform.position.x< huddlegenpos[6]+0.5f){
                 Destroy(gameObject);
             }
         }

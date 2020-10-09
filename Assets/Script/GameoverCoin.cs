@@ -13,7 +13,7 @@ public class GameoverCoin : MonoBehaviour
     {        
     	
     	text_coin.GetComponent<Text>().text = ""+GameDirector.coin_get_num;
-     	bar.transform.position = new Vector3(bar.transform.position.x + (dead_pos/222)*10.4f, -1.1f, 2);
+     	bar.transform.position = new Vector3(bar.transform.position.x + (dead_pos/356)*10.4f, -1.1f, 2);
      	// Debug.Log((dead_pos/222)*10.4f);
      	// bar.transform.position = Vector2.Lerp(bar.transform.position, new Vector3(bar.transform.position.x + (dead_pos/222)*10.4f, -1.1f, 2), 0.05f);
     }

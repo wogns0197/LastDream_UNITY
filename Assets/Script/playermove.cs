@@ -39,7 +39,7 @@ public class playermove : MonoBehaviour
         time += Time.deltaTime;
         if(supermode){ // life 하나 사라졌을 때 2초동안 무적 유지
             if(time >2f){ // 무적 끝
-                GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= false;
+                if(GameObject.FindGameObjectWithTag("huddle") != null){GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= false;}
                 supermode=false;
                 time = 0;
                 this.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
@@ -115,11 +115,13 @@ public class playermove : MonoBehaviour
             lifeminus(life--);
         }
         //topbar , 바 원래 포지션 -17.55 에서 0으로 까지의 거리 / 전체 맵 길이 222 = 0.079054054054054
+        //     /362 =  0.048480662983425
+        //     /356 =  0.049297752808989
         // "로컬포지션" 수정시 조심!
         if(this.transform.position.x>0){            
-            topbar.transform.localPosition = new Vector3( -17.55f +gameObject.transform.localPosition.x*0.079054054054054f, 4.82f, 2);
+            topbar.transform.localPosition = new Vector3( -17.55f +gameObject.transform.localPosition.x*0.05191671388102f, 4.82f, 2);
         }
-        if(this.transform.position.x>222f){
+        if(this.transform.position.x>357f){
             SceneManager.LoadScene("Clear");
         }
 
@@ -155,7 +157,7 @@ public class playermove : MonoBehaviour
     
     //안전한 포인트를 정해야할 것 같음
     void GotoBack(Vector3 pos){
-        this.transform.position = new Vector3( pos.x-5f, 1f, pos.z);
+        this.transform.position = new Vector3( pos.x-5f, 1.5f, pos.z);
         // if(col_huddle!=null){col_huddle.GetComponent<BoxCollider2D>().enabled=false;}
         supermode = true;
         time = 0;
