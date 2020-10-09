@@ -9,6 +9,7 @@ public class HuddleGenerator : MonoBehaviour
     public GameObject huddle_prefab;
     public float huddle_speed=0.02f; 
 
+
     void Start()
     {
         time=0;

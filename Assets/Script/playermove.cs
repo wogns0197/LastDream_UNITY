@@ -45,7 +45,7 @@ public class playermove : MonoBehaviour
                 this.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
             }
             else{
-                GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= true;
+                if(GameObject.FindGameObjectWithTag("huddle")!=null){GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= true;}
             }   
         }
         //Jump
@@ -153,6 +153,7 @@ public class playermove : MonoBehaviour
     }
 
     
+    //안전한 포인트를 정해야할 것 같음
     void GotoBack(Vector3 pos){
         this.transform.position = new Vector3( pos.x-5f, 1f, pos.z);
         // if(col_huddle!=null){col_huddle.GetComponent<BoxCollider2D>().enabled=false;}

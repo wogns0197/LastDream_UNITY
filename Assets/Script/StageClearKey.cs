@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class StageClearKey : MonoBehaviour
 {
-    public float time,z_rotation,effect_opacity,opc;
+    public float time,z_rotation,effect_opacity;
+    int opc;
     public GameObject key,effect;
 
     void Start()
