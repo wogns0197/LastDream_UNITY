@@ -114,12 +114,11 @@ public class playermove : MonoBehaviour
             GotoBack(this.transform.position);
             lifeminus(life--);
         }
-        //topbar , 바 원래 포지션 -17.55 에서 0으로 까지의 거리 / 전체 맵 길이 222 = 0.079054054054054
-        //     /362 =  0.048480662983425
-        //     /356 =  0.049297752808989
+        // -23 ~ -3.9 == 19.1
+        //     /356 =  0.053651685393258
         // "로컬포지션" 수정시 조심!
         if(this.transform.position.x>0){            
-            topbar.transform.localPosition = new Vector3( -17.55f +gameObject.transform.localPosition.x*0.05191671388102f, 4.82f, 2);
+            topbar.transform.localPosition = new Vector3( -23f +gameObject.transform.localPosition.x*0.053651685393258f, 4.9f, 2);
         }
         if(this.transform.position.x>357f){
             SceneManager.LoadScene("Clear");
