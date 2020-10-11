@@ -39,14 +39,14 @@ public class playermove : MonoBehaviour
         time += Time.deltaTime;
         if(supermode){ // life 하나 사라졌을 때 2초동안 무적 유지
             if(time >2f){ // 무적 끝
-                if(GameObject.FindGameObjectWithTag("huddle") != null){GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= false;}
+                // if(GameObject.FindGameObjectWithTag("huddle") != null){GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= false;}
                 supermode=false;
                 time = 0;
                 this.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
             }
-            else{
-                if(GameObject.FindGameObjectWithTag("huddle")!=null){GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= true;}
-            }   
+            // else{                
+            //     if(GameObject.FindGameObjectWithTag("huddle")!=null){GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= true;}
+            // }   
         }
         //Jump
         
@@ -172,12 +172,18 @@ public class playermove : MonoBehaviour
         }
     }
     
-    void OnCollisionEnter2D(Collision2D other){        
-        if(other.gameObject.tag == "huddle"){
-            Destroy(other.gameObject);
-            GotoBack(this.transform.position);
-            lifeminus(life--);                    
-            // GotoBack(this.transform.position);
+    void OnCollisionEnter2D(Collision2D other){
+        if( other.gameObject.tag == "huddle"){
+            if( !supermode){
+                Destroy(other.gameObject);
+                GotoBack(this.transform.position);
+                lifeminus(life--);                    
+                // GotoBack(this.transform.position);
+            }
+        
+            else{
+                Destroy(other.gameObject);
+            }
         }
     }
 

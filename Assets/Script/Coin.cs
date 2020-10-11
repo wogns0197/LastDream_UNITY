@@ -9,8 +9,10 @@ public class Coin : MonoBehaviour
     void Update(){} //
 
     void OnTriggerEnter2D(Collider2D other){
-    	GameDirector.coin_get_num++;
-    	Destroy(gameObject);
+    	if(other.name == "player"){
+	    	GameDirector.coin_get_num++;
+	    	Destroy(gameObject);
+	    }
     }
     
 
