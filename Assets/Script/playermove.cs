@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 public class playermove : MonoBehaviour
 {
     public float maxspeed,jumpPower,time;
-    public GameObject topbar,topdiamond,huddle,moon;
+    public GameObject topbar,topdiamond,huddle,moon, coin_easter_only;
     public int life; // 게임디렉터에 넣기에 애매함.    
     bool supermode;
-    private int jumpnum;
+    private int jumpnum,easter_i;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
@@ -21,6 +21,7 @@ public class playermove : MonoBehaviour
         time = 0;
         jumpnum = 0;
         supermode = false;
+        easter_i = 1;
         huddle.GetComponent<BoxCollider2D>().enabled=true;        
     }
 
@@ -188,18 +189,42 @@ public class playermove : MonoBehaviour
             else{
                 Destroy(other.gameObject);
             }
+        }        
+    }
+    void OnTriggerEnter2D(Collider2D other){
+        if( (other.gameObject.name == "box1" && easter_i == 1) || (other.gameObject.name == "box2" && easter_i == 2)){
+            easter_i++;
+            for(int i=0; i<10; i++){
+                Instantiate(coin_easter_only, 
+                    new Vector3(this.transform.position.x,this.transform.position.y+i/1.5f,this.transform.position.z),
+                     Quaternion.identity);    
+            }
+            
         }
+        if(other.gameObject.name == "box3" && easter_i == 3){
+            this.transform.position = new Vector3(150f, 5f, this.transform.position.z);
+        }
+
     }
 
 
     public void jump(){
         //점프 버튼용 함수
-        if(this.transform.position.y > -2f){//밑으로 떨어질 시 점프 불가 지면위에 있을때 y = -1.984775            
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            anim.SetBool("is jumping", true);    
-            
-            
-        }  
+        if(this.transform.position.y > -3f){//밑으로 떨어질 시 점프 불가 지면위에 있을때 y = -1.984775
+                if(jumpnum <2){
+                    if(jumpnum==0){
+                        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+                        anim.SetBool("is jumping", true);    
+                        jumpnum++;    
+                    }
+                    else{
+                        rigid.AddForce(Vector2.up * jumpPower *0.9f, ForceMode2D.Impulse);
+                        anim.SetBool("is jumping", true);    
+                        jumpnum++;
+                    }
+                }
+
+            }     
     }
 
 

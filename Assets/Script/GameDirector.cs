@@ -45,6 +45,6 @@ public class GameDirector : MonoBehaviour
         Time.timeScale = 1;   
         pausemenu.SetActive(false);
         jumpbutton.SetActive(true);
-    }
+    }    
 
 }
