@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class playermove : MonoBehaviour
 {
     public float maxspeed,jumpPower,time;
-    public GameObject topbar,topdiamond,huddle;
+    public GameObject topbar,topdiamond,huddle,moon;
     public int life; // 게임디렉터에 넣기에 애매함.    
     bool supermode;
     private int jumpnum;
@@ -128,7 +128,11 @@ public class playermove : MonoBehaviour
             lifeminus(life--);
         }
 
-    }
+        //달 위치조정
+        moon.transform.position = new Vector3(this.transform.position.x, 6.5f, 0);
+
+
+    }//Update end
 
     void FixedUpdate()
     {
@@ -156,7 +160,7 @@ public class playermove : MonoBehaviour
     
     //안전한 포인트를 정해야할 것 같음
     void GotoBack(Vector3 pos){
-        this.transform.position = new Vector3( pos.x-5f, 1.5f, pos.z);
+        this.transform.position = new Vector3( pos.x-5f, 2f, pos.z);
         // if(col_huddle!=null){col_huddle.GetComponent<BoxCollider2D>().enabled=false;}
         supermode = true;
         time = 0;
