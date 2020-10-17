@@ -172,6 +172,8 @@ public class playermove : MonoBehaviour
         else if(num==2){GameObject.Find("top_hart2").SetActive(false);}
         else if(num==1){GameObject.Find("top_hart").SetActive(false);}
         else if(num==0){
+            // Debug.Log("player "+GameDirector.player_name_list[InitialGame.playernum]+  "'s coin = "+GameDirector.coin_get_num);
+            GameDirector.player_score_list.Add(GameDirector.coin_get_num);
             SceneManager.LoadScene("GameOver");
            GameoverCoin.dead_pos = this.transform.position.x+5f;
         }

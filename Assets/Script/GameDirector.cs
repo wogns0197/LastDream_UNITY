@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour
 {
     public static int coin_get_num;
+    public static List<string> player_name_list = new List<string>();  //랭킹 이름 표시 리스트
+    public static List<int> player_score_list = new List<int>();  //랭킹 점수 표시 리스트
+
     bool clicked = false;
     public GameObject pausemenu, jumpbutton;
     //전역변수 선언 --> GameDirector.coin_get_num 으로 다른 스크립트에서 사용하면됨
@@ -46,5 +50,11 @@ public class GameDirector : MonoBehaviour
         pausemenu.SetActive(false);
         jumpbutton.SetActive(true);
     }    
+
+    public void ToStartScene(){
+        player_score_list.Add(coin_get_num);
+        // Debug.Log("player "+player_name_list[InitialGame.playernum]+  "'s coin = "+coin_get_num);
+        SceneManager.LoadScene("Start");
+    }
 
 }

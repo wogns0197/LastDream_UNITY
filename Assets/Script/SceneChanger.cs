@@ -10,6 +10,11 @@ public class SceneChanger : MonoBehaviour
 		SceneManager.LoadScene("SampleScene");
 		Time.timeScale=1;
 	}
+	public void ChangeSceneToStart(){
+		// Debug.Log("player "+GameDirector.player_name_list[InitialGame.playernum]+  "'s coin = "+GameDirector.coin_get_num);		
+		SceneManager.LoadScene("Start");
+		Time.timeScale=1;
+	}
 	public void ChangeSceneToStage2(){
 		// SceneManager.LoadScene("Stage2");
 	}    
