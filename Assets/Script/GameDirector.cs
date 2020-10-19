@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour
 {
     public static int coin_get_num;
-    public static List<string> player_name_list = new List<string>();  //랭킹 이름 표시 리스트
-    public static List<int> player_score_list = new List<int>();  //랭킹 점수 표시 리스트
-
+    // public static List<string> player_name_list = new List<string>();  //랭킹 이름 표시 리스트
+    // public static List<int> player_score_list = new List<int>();  //랭킹 점수 표시 리스트
+    public static List<Player> rank_list = new List<Player>(); // 랭킹 이름과 점수를 셋으로하는 객체를 모아둔 리스트
     bool clicked = false;
     public GameObject pausemenu, jumpbutton;
     //전역변수 선언 --> GameDirector.coin_get_num 으로 다른 스크립트에서 사용하면됨
@@ -52,8 +52,9 @@ public class GameDirector : MonoBehaviour
     }    
 
     public void ToStartScene(){
-        player_score_list.Add(coin_get_num);
-        // Debug.Log("player "+player_name_list[InitialGame.playernum]+  "'s coin = "+coin_get_num);
+        InitialGame.playerlist[InitialGame.playernum].score = coin_get_num;
+        rank_list.Add(InitialGame.playerlist[InitialGame.playernum]);
+        // player_score_list.Add(coin_get_num);
         SceneManager.LoadScene("Start");
     }
 

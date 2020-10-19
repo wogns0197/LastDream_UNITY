@@ -125,8 +125,11 @@ public class playermove : MonoBehaviour
             SceneManager.LoadScene("Clear");
         }
 
-        if(Input.GetKeyDown(KeyCode.Q)){
+        if(Input.GetKeyDown(KeyCode.Q)){ //testbutton
             lifeminus(life--);
+        }
+        if(Input.GetKeyDown(KeyCode.W)){ //testbutton
+            GameDirector.coin_get_num++;
         }
 
         //달 위치조정
@@ -172,8 +175,9 @@ public class playermove : MonoBehaviour
         else if(num==2){GameObject.Find("top_hart2").SetActive(false);}
         else if(num==1){GameObject.Find("top_hart").SetActive(false);}
         else if(num==0){
-            // Debug.Log("player "+GameDirector.player_name_list[InitialGame.playernum]+  "'s coin = "+GameDirector.coin_get_num);
-            GameDirector.player_score_list.Add(GameDirector.coin_get_num);
+            InitialGame.playerlist[InitialGame.playernum].score = GameDirector.coin_get_num;
+            GameDirector.rank_list.Add(InitialGame.playerlist[InitialGame.playernum]);
+            // GameDirector.player_score_list.Add(GameDirector.coin_get_num);
             SceneManager.LoadScene("GameOver");
            GameoverCoin.dead_pos = this.transform.position.x+5f;
         }

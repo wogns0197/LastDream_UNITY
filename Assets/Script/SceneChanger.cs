@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChanger : MonoBehaviour
+public class SceneChanger : MonoBehaviour//clear씬에서 사용
 {
-    
 	public void ChangeSceneToGame(){		
 		SceneManager.LoadScene("SampleScene");
 		Time.timeScale=1;

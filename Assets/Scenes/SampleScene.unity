@@ -2569,7 +2569,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220806397}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 12.12527, y: 0.21299982, z: 0}
+  m_LocalPosition: {x: 12.12527, y: 0.21299982, z: -1}
   m_LocalScale: {x: 0.08856816, y: 0.100000046, z: 0.100000046}
   m_Children: []
   m_Father: {fileID: 1988459690}
@@ -24237,7 +24237,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 17.51, y: 32.819313, z: 0}
   m_MaxChunkCount: 16

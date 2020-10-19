@@ -1,40 +1,64 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class InitialGame : MonoBehaviour
+
+public class Player: MonoBehaviour{
+	public string id;
+	public int score;
+	// public Player(string _id, int _score){
+	// 	this.id = _id;
+	// 	this.score = _score ;
+	// }
+}
+
+
+public class InitialGame : Player
 {
+	public static Player[] playerlist = new Player[10];
     public static int playernum=-1;
     public Text playername;
     // public Text[] rank = [r1,r2,r3,r4,r5,r6,r7];
+	
+
+
 
     void Start()
     {	
     	// for(int i=0;i<7;i++){
     	// 	rank[0]= 
     	// }
-        for(int i=0;i<GameDirector.player_name_list.Count; i++){        	
-        	GameObject.Find("r" + (i+1).ToString()).GetComponent<Text>().text = (i+1).ToString()+". "+ GameDirector.player_name_list[i]+  " = "+GameDirector.player_score_list[i].ToString();
+    	List<Player> ranking = GameDirector.rank_list.OrderByDescending(x => x.score).ToList();
+        for(int i=0;i<playernum+1; i++){        	
+        	GameObject.Find("r" + (i+1).ToString()).GetComponent<Text>().text = (i+1).ToString()+". "+ ranking[i].id+  " = "+ranking[i].score.ToString();
         }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q)){
-        	for(int i=0;i<GameDirector.player_name_list.Count;i++){
-        		Debug.Log(GameDirector.player_name_list[i] +" : "+ GameDirector.player_score_list[i]);	
-        	}
-        	
-        }
+        
     }
 
     public void StartGame(){
-    	GameDirector.player_name_list.Add(playername.GetComponent<Text>().text);
-    	Time.timeScale = 1;   
-    	SceneManager.LoadScene("SampleScene");
-    	playernum++;
+    	// playerlist[0].setData(playername.GetComponent<Text>().text,0);
+    	if(playername.GetComponent<Text>().text!=""){
+    		playerlist[playernum +1] = new Player();
+	    	playerlist[playernum +1].id = playername.GetComponent<Text>().text;
+	    	playerlist[playernum +1].score = 0;
+	    	
+	    	
+	    	Time.timeScale = 1;   
+	    	SceneManager.LoadScene("SampleScene");
+	    	playernum++;	
+    	}
+    	else{
+    		Debug.Log("Input Name!");
+    	}
     }
 }
+
