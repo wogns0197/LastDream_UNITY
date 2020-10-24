@@ -119,9 +119,12 @@ public class playermove : MonoBehaviour
         //     /356 =  0.053651685393258
         // "로컬포지션" 수정시 조심!
         if(this.transform.position.x>0){            
-            topbar.transform.localPosition = new Vector3( -23f +gameObject.transform.localPosition.x*0.053651685393258f, 4.9f, 2);
+            topbar.transform.localPosition = new Vector3( -22.3f +gameObject.transform.localPosition.x*0.053651685393258f, 4.9f, 2);
         }
-        if(this.transform.position.x>357f){
+
+        if(this.transform.position.x>357f){ // clear!
+            InitialGame.playerlist[InitialGame.playernum].score = GameDirector.coin_get_num;
+            GameDirector.rank_list.Add(InitialGame.playerlist[InitialGame.playernum]);
             SceneManager.LoadScene("Clear");
         }
 
@@ -130,6 +133,9 @@ public class playermove : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.W)){ //testbutton
             GameDirector.coin_get_num++;
+        }
+        if(Input.GetKeyDown(KeyCode.E)){ //testbutton
+            this.transform.position += new Vector3(350f, 0, 0);
         }
 
         //달 위치조정
