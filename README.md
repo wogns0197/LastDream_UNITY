@@ -67,5 +67,6 @@
 - 201024
   1) 메인페이지 배경위에 로고,별, touch 별개로 올려둠
   2) 별이랑 touch 반짝거리게 twinkle 스크립트 --> public 공동변수 많으니 수정 시 유의
+  3) Clear Stage에서 그만하기 버튼 활성화 (Start Page로) --> 버튼 눌렀을 때 랭크에 들어가는게 아니라, finish line 도달하면 랭크에 추가
   
   
