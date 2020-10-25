@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class playermove : MonoBehaviour
 {
     public float maxspeed,jumpPower,time;
-    public GameObject topbar,topdiamond,huddle,moon, coin_easter_only;
+    public GameObject topbar,topdiamond,huddle,moon, coin_easter_only, col_coin_audio;
     public int life; // 게임디렉터에 넣기에 애매함.    
     bool supermode;
     private int jumpnum,easter_i;
@@ -190,7 +190,7 @@ public class playermove : MonoBehaviour
     }
     
     void OnCollisionEnter2D(Collision2D other){
-        if( other.gameObject.tag == "huddle"){
+        if( other.gameObject.tag == "huddle"){            
             if( !supermode){
                 Destroy(other.gameObject);
                 GotoBack(this.transform.position);
