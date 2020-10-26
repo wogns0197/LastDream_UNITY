@@ -58,6 +58,7 @@ public class playermove : MonoBehaviour
         if (Input.GetButtonDown("Jump")){
             if(this.transform.position.y > -3f){//밑으로 떨어질 시 점프 불가 지면위에 있을때 y = -1.984775
                 soundsource.clip = soundlist[0];
+                soundsource.volume = 0.3f;
                 soundsource.loop = false;
                 soundsource.Play();
                 if(jumpnum <2){
@@ -97,12 +98,14 @@ public class playermove : MonoBehaviour
             if(jumpnum!=0){
                 soundsource.clip = soundlist[1];
                 soundsource.loop = false;
+                soundsource.volume = 0.28f;
                 soundsource.Play();
             }
             anim.SetBool("is jumping", false);            
             jumpnum=0;            
             if(! soundsource.isPlaying && Mathf.Abs(rigid.velocity.x) > 1f ) {
                 soundsource.clip = soundlist[2];
+                soundsource.volume = 0.1f;
                 soundsource.loop = false;
                 soundsource.Play();    
             }
