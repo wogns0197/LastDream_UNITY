@@ -8,6 +8,8 @@ public class playermove : MonoBehaviour
     public float maxspeed,jumpPower,time;
     public GameObject topbar,topdiamond,huddle,moon, coin_easter_only, col_coin_audio;
     public int life; // 게임디렉터에 넣기에 애매함.    
+    public AudioClip[] soundlist;
+    AudioSource soundsource;
     bool supermode;
     private int jumpnum,easter_i;
     Rigidbody2D rigid;
@@ -23,6 +25,8 @@ public class playermove : MonoBehaviour
         supermode = false;
         easter_i = 1;
         huddle.GetComponent<BoxCollider2D>().enabled=true;        
+        soundsource = this.GetComponent<AudioSource>();
+        soundsource.volume = 0.5f;
     }
 
     void Awake()
@@ -53,6 +57,9 @@ public class playermove : MonoBehaviour
         
         if (Input.GetButtonDown("Jump")){
             if(this.transform.position.y > -3f){//밑으로 떨어질 시 점프 불가 지면위에 있을때 y = -1.984775
+                soundsource.clip = soundlist[0];
+                soundsource.loop = false;
+                soundsource.Play();
                 if(jumpnum <2){
                     if(jumpnum==0){
                         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
@@ -86,9 +93,20 @@ public class playermove : MonoBehaviour
         }
 
         //추가한코드 --> 속력말고 좌표로 나중에 수정하기
-        if (Mathf.Abs(rigid.velocity.y) == 0){        
-            anim.SetBool("is jumping", false);
-            jumpnum=0;
+        if (Mathf.Abs(rigid.velocity.y) == 0){            
+            if(jumpnum!=0){
+                soundsource.clip = soundlist[1];
+                soundsource.loop = false;
+                soundsource.Play();
+            }
+            anim.SetBool("is jumping", false);            
+            jumpnum=0;            
+            if(! soundsource.isPlaying && Mathf.Abs(rigid.velocity.x) > 1f ) {
+                soundsource.clip = soundlist[2];
+                soundsource.loop = false;
+                soundsource.Play();    
+            }
+            
         }
         // if( < 0){
         //     isDowning=true;
@@ -106,8 +124,9 @@ public class playermove : MonoBehaviour
         //Animation
         if ( Mathf.Abs(rigid.velocity.x) < 0.3)
             anim.SetBool("is walking", false);
-        else
-            anim.SetBool("is walking", true);
+        else{
+            anim.SetBool("is walking", true);            
+        }
 
         //밑으로 떨어지면 gameover!
         if(this.transform.position.y < -5f){
@@ -201,7 +220,7 @@ public class playermove : MonoBehaviour
             else{
                 Destroy(other.gameObject);
             }
-        }        
+        }            
     }
     void OnTriggerEnter2D(Collider2D other){
         if( (other.gameObject.name == "box1" && easter_i == 1) || (other.gameObject.name == "box2" && easter_i == 2)){
