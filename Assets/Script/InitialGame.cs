@@ -35,7 +35,7 @@ public class InitialGame : Player
     	// }
     	List<Player> ranking = GameDirector.rank_list.OrderByDescending(x => x.score).ToList();
         for(int i=0;i<playernum+1; i++){        	
-        	GameObject.Find("r" + (i+1).ToString()).GetComponent<Text>().text = (i+1).ToString()+". "+ ranking[i].id+  " = "+ranking[i].score.ToString();
+        	GameObject.Find("r" + (i+1).ToString()).GetComponent<Text>().text = (i+1).ToString()+"등 "+ ranking[i].id+  " = "+ranking[i].score.ToString();
         }
         
     }

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+// using UnityEngine.Events;
 
-public class playermove : MonoBehaviour
+public class playermove : MonoBehaviour 
 {
     public float maxspeed,jumpPower,time;
     public GameObject topbar,topdiamond,huddle,moon, coin_easter_only, col_coin_audio;
@@ -16,7 +17,7 @@ public class playermove : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator anim;
 
-    void Start(){
+    void Start(){        
     	maxspeed = 18f;
     	jumpPower = 60f;
         life = 3;
@@ -111,21 +112,15 @@ public class playermove : MonoBehaviour
             }
             
         }
-        // if( < 0){
-        //     isDowning=true;
-        // }
-
             //Stop Speed
             if (Input.GetButtonUp("Horizontal")) {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x*0.5f, rigid.velocity.y);
         }
 
-        //Direction Sprite
-        if (Input.GetButtonDown("Horizontal"))
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        
 
         //Animation
-        if ( Mathf.Abs(rigid.velocity.x) < 0.3)
+        if ( Mathf.Abs(rigid.velocity.x) < 0.5)
             anim.SetBool("is walking", false);
         else{
             anim.SetBool("is walking", true);            
@@ -163,32 +158,26 @@ public class playermove : MonoBehaviour
         //달 위치조정
         moon.transform.position = new Vector3(this.transform.position.x, 6.5f, 0);
 
+        
 
     }//Update end
 
-    void FixedUpdate()
-    {
-        //Move Speed
-        float h = Input.GetAxisRaw("Horizontal");
-        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
-       
-        //Max Speed
-        if (rigid.velocity.x > maxspeed) //Right Max Speed
-            rigid.velocity = new Vector2(maxspeed, rigid.velocity.y);
-        else if (rigid.velocity.x < maxspeed*(-1)) //Left Max Speed
-            rigid.velocity = new Vector2(maxspeed*(-1), rigid.velocity.y);
+    
+    // void FixedUpdate()
+    // {        
 
-        //Landing Platform
-        Debug.DrawRay(rigid.position, Vector3.down*2, new Color(0, 1, 0));
+        // Landing Platform
+        // Debug.DrawRay(rigid.position, Vector3.down*2, new Color(0, 1, 0));
 
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+        // RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
 
-        if(rayHit.collider != null) {
-            if (rayHit.distance < 0.5f)
-            Debug.Log(rayHit.collider.name);
-        }
-    }
+        // if(rayHit.collider != null) {
+        //     if (rayHit.distance < 0.5f)
+        //     Debug.Log(rayHit.collider.name);
+        // }
+    // }
 
+    
     
     //안전한 포인트를 정해야할 것 같음
     void GotoBack(Vector3 pos){
