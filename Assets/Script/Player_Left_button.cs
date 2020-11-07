@@ -14,7 +14,7 @@ public class Player_Left_button : MonoBehaviour, IPointerDownHandler,IPointerUpH
     void Start()
     {	
     	isDown = false;
-        maxspeed = 8f;
+        maxspeed = 6f;
         rigid = player.GetComponent<Rigidbody2D>();
         spriteRenderer = player.GetComponent<SpriteRenderer>();
     }

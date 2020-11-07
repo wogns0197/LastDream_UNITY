@@ -32,6 +32,7 @@ public class playermove : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = 60;
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator> ();
@@ -135,13 +136,15 @@ public class playermove : MonoBehaviour
         // -23 ~ -3.9 == 19.1
         //     /356 =  0.053651685393258
         // "로컬포지션" 수정시 조심!
+
+        // -19.7 ~ -6.99 / 356 = 0.035702247191011
         if(this.transform.position.x>0){            
-            topbar.transform.localPosition = new Vector3( -22.3f +gameObject.transform.localPosition.x*0.053651685393258f, 4.9f, 2);
+            topbar.transform.localPosition = new Vector3( -19.7f +gameObject.transform.localPosition.x*0.035702247191011f, 4.9f, 2);
         }
 
         if(this.transform.position.x>357f){ // clear!
             InitialGame.playerlist[InitialGame.playernum].score = GameDirector.coin_get_num;
-            GameDirector.rank_list.Add(InitialGame.playerlist[InitialGame.playernum]);
+            GameDirector.rank_list.Add(InitialGame.playerlist[InitialGame.playernum]); 
             SceneManager.LoadScene("Clear");
         }
 
@@ -154,6 +157,9 @@ public class playermove : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E)){ //testbutton
             this.transform.position += new Vector3(350f, 0, 0);
         }
+        
+            
+        
 
         //달 위치조정
         moon.transform.position = new Vector3(this.transform.position.x, 6.5f, 0);
