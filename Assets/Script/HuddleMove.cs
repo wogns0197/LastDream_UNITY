@@ -3,21 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HuddleMove : MonoBehaviour
-{
+{   
+    public GameObject player, jump_huddle;
     public float MoveSpeed;
     float[] huddlegenpos = {1,54f,109f,180f,217f,268f,364f};
     void Start()
     {
-        MoveSpeed = GameObject.Find("HuddleGenerator").GetComponent<HuddleGenerator>().huddle_speed;
-        
+        player = GameObject.Find("player");
+        MoveSpeed = SelectMode.huddlespeed;
+        jump_huddle.SetActive(false);
 
     }
-
-    // Update is called once per frame
 
     
     void Update()
     {   
+        if(player.transform.position.y > 0.34f){            
+            jump_huddle.SetActive(true);
+            jump_huddle.transform.position = new Vector3(this.transform.localPosition.x - 0.7f,player.transform.position.y - 2.62f,this.transform.position.z);
+        }
+        else{
+            jump_huddle.SetActive(false);   
+        }
+
         if(Time.timeScale!=0){
             this.transform.Translate(Vector2.left * MoveSpeed);        
             if(this.transform.position.x >huddlegenpos[0] && this.transform.position.x< huddlegenpos[0]+0.5f){

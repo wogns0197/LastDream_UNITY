@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainPage : MonoBehaviour
 {
-    public GameObject Startpage, Ranking;   
+    public GameObject Startpage;   
     // float time,scales;
     // int switchcase;
     void Start()
@@ -13,7 +13,7 @@ public class MainPage : MonoBehaviour
         // time = 0;
         // switchcase = 1;
         Startpage.SetActive(false);
-        Ranking.transform.localPosition = new Vector3(0, 0, 501f); //메인 페이지에 랭킹리스트 안뜨게 하는 방법
+        // Ranking.transform.localPosition = new Vector3(0, 0, 501f);메인 페이지에 랭킹리스트 안뜨게 하는 방법
     }
 
     // Update is called once per frame
@@ -45,7 +45,7 @@ public class MainPage : MonoBehaviour
         if(Input.GetMouseButtonDown(0)){
         	this.gameObject.SetActive(false);
         	Startpage.SetActive(true);
-            Ranking.transform.localPosition = new Vector3(0, 0, 1f); // 다시 뜨게
+            // Ranking.transform.localPosition = new Vector3(0, 0, 1f); // 다시 뜨게
         }
     }
 }

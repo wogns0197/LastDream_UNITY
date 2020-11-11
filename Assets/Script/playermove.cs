@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class playermove : MonoBehaviour 
 {
-    public float maxspeed,jumpPower,time;
-    public GameObject topbar,topdiamond,huddle,moon, coin_easter_only, col_coin_audio;
+    public float maxspeed,jumpPower,time, supermode_time;
+    public GameObject topbar,topdiamond,huddle,moon, coin_easter_only, col_coin_audio, wall , top_heart1,top_heart2,top_heart3,top_heart4,top_heart5;
     public int life; // 게임디렉터에 넣기에 애매함.    
     public AudioClip[] soundlist;
     AudioSource soundsource;
@@ -25,9 +25,11 @@ public class playermove : MonoBehaviour
         jumpnum = 0;
         supermode = false;
         easter_i = 1;
+        supermode_time = SelectMode.supermodetime;
         huddle.GetComponent<BoxCollider2D>().enabled=true;        
         soundsource = this.GetComponent<AudioSource>();
         soundsource.volume = 0.5f;
+        wall.SetActive(false);
     }
 
     void Awake()
@@ -45,15 +47,16 @@ public class playermove : MonoBehaviour
     {
         time += Time.deltaTime;
         if(supermode){ // life 하나 사라졌을 때 2초동안 무적 유지
-            if(time >2f){ // 무적 끝
+            if(time >supermode_time){ // 무적 끝
                 // if(GameObject.FindGameObjectWithTag("huddle") != null){GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= false;}
                 supermode=false;
                 time = 0;
                 this.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1);
+                wall.SetActive(false);
             }
-            // else{                
-            //     if(GameObject.FindGameObjectWithTag("huddle")!=null){GameObject.FindGameObjectWithTag("huddle").GetComponent<BoxCollider2D>().isTrigger= true;}
-            // }   
+            else{                
+                
+            }   
         }
         //Jump
         
@@ -131,7 +134,7 @@ public class playermove : MonoBehaviour
         if(this.transform.position.y < -5f){
             // SceneManager.LoadScene("GameOver");
             GotoBack(this.transform.position);
-            lifeminus(life--);
+            setLife(--life,false);
         }
         // -23 ~ -3.9 == 19.1
         //     /356 =  0.053651685393258
@@ -149,7 +152,7 @@ public class playermove : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.Q)){ //testbutton
-            lifeminus(life--);
+            setLife(--life,false);
         }
         if(Input.GetKeyDown(KeyCode.W)){ //testbutton
             GameDirector.coin_get_num++;
@@ -192,18 +195,32 @@ public class playermove : MonoBehaviour
         supermode = true;
         time = 0;
         this.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);                
+        wall.SetActive(true);
     }   
-    void lifeminus(int num){
-        if(num==3){GameObject.Find("top_hart3").SetActive(false);}
-        else if(num==2){GameObject.Find("top_hart2").SetActive(false);}
-        else if(num==1){GameObject.Find("top_hart").SetActive(false);}
-        else if(num==0){
-            InitialGame.playerlist[InitialGame.playernum].score = GameDirector.coin_get_num;
-            GameDirector.rank_list.Add(InitialGame.playerlist[InitialGame.playernum]);
-            // GameDirector.player_score_list.Add(GameDirector.coin_get_num);
-            SceneManager.LoadScene("GameOver");
-           GameoverCoin.dead_pos = this.transform.position.x+5f;
+    void setLife(int num,bool select){
+        Debug.Log(num+","+select);
+        if(select){
+            if(num==5){top_heart5.SetActive(true);}
+            else if(num==4){top_heart4.SetActive(true);}
+            else if(num==3){top_heart3.SetActive(true);}
+            else if(num==2){top_heart2.SetActive(true);}
+            else if(num==1){top_heart1.SetActive(true);}
         }
+        else{
+            if(num==4){top_heart5.SetActive(false);}
+            else if(num==3){top_heart4.SetActive(false);}
+            else if(num==2){top_heart3.SetActive(false);}
+            else if(num==1){top_heart2.SetActive(false);}
+            else if(num==0){top_heart1.SetActive(false);}
+            else if(num<0){
+                InitialGame.playerlist[InitialGame.playernum].score = GameDirector.coin_get_num;
+                GameDirector.rank_list.Add(InitialGame.playerlist[InitialGame.playernum]);
+                // GameDirector.player_score_list.Add(GameDirector.coin_get_num);
+                SceneManager.LoadScene("GameOver");
+               GameoverCoin.dead_pos = this.transform.position.x+5f;
+            }
+        }
+        
     }
     
     void OnCollisionEnter2D(Collision2D other){
@@ -211,14 +228,17 @@ public class playermove : MonoBehaviour
             if( !supermode){
                 Destroy(other.gameObject);
                 GotoBack(this.transform.position);
-                lifeminus(life--);                    
+                setLife(--life , false);                    
                 // GotoBack(this.transform.position);
-            }
-        
+            }            
             else{
                 Destroy(other.gameObject);
             }
         }            
+        else if(other.gameObject.tag == "heart"){
+            Destroy(other.gameObject);
+            setLife(++life,true);                    
+        }
     }
     void OnTriggerEnter2D(Collider2D other){
         if( (other.gameObject.name == "box1" && easter_i == 1) || (other.gameObject.name == "box2" && easter_i == 2)){
