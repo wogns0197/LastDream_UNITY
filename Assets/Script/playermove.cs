@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class playermove : MonoBehaviour 
 {
     public float maxspeed,jumpPower,time, supermode_time;
-    public GameObject topbar,topdiamond,huddle,moon, coin_easter_only, col_coin_audio, wall , top_heart1,top_heart2,top_heart3,top_heart4,top_heart5;
+    public GameObject topbar,topdiamond,huddle,moon, coin_easter_only, col_coin_audio, wall , top_heart1,top_heart2,top_heart3,top_heart4,top_heart5,addheart_easy,addheart_hard;
     public int life; // 게임디렉터에 넣기에 애매함.    
     public AudioClip[] soundlist;
     AudioSource soundsource;
@@ -30,6 +30,13 @@ public class playermove : MonoBehaviour
         soundsource = this.GetComponent<AudioSource>();
         soundsource.volume = 0.5f;
         wall.SetActive(false);
+        if(supermode_time==2f){
+            addheart_hard.SetActive(false);
+            addheart_easy.SetActive(false);
+        }
+        else if(supermode_time==3f){
+            addheart_easy.SetActive(false);
+        }
     }
 
     void Awake()
