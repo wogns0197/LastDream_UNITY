@@ -59,6 +59,7 @@ public class GameDirector : MonoBehaviour
         InitialGame.playerlist[InitialGame.playernum].score = coin_get_num;
         rank_list.Add(InitialGame.playerlist[InitialGame.playernum]);
         // player_score_list.Add(coin_get_num);
+        Destroy(GameObject.Find("BGM"));        
         SceneManager.LoadScene("Start");
     }
 

@@ -95,10 +95,11 @@ public class InitialGame : Player
             playerlist[playernum +1] = new Player();
             playerlist[playernum +1].id = playername.GetComponent<Text>().text;
             playerlist[playernum +1].score = 0;
+            Select_Canvas.SetActive(false);
+            Startpage.SetActive(false);
+            Modepage.SetActive(true);
         }    
-        Select_Canvas.SetActive(false);
-        Startpage.SetActive(false);
-        Modepage.SetActive(true);
+        
     }
 
     public void StartGame(){	    	

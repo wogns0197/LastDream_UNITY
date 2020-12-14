@@ -7,9 +7,10 @@ using UnityEngine.SceneManagement;
 public class playermove : MonoBehaviour 
 {
     public float maxspeed,jumpPower,time, supermode_time;
-    public GameObject topbar,topdiamond,huddle,moon, coin_easter_only, col_coin_audio, wall , top_heart1,top_heart2,top_heart3,top_heart4,top_heart5,addheart_easy,addheart_hard;
+    public GameObject topbar,topdiamond,huddle,moon, coin_easter_only, col_coin_audio;
+    public GameObject wall , top_heart1,top_heart2,top_heart3,top_heart4,top_heart5,top_heart6,addheart_easy,addheart_hard;
     public int life; // 게임디렉터에 넣기에 애매함.    
-    public AudioClip[] soundlist;
+    public AudioClip[] soundlist;    
     AudioSource soundsource;
     bool supermode;
     private int jumpnum,easter_i;
@@ -85,23 +86,6 @@ public class playermove : MonoBehaviour
                         jumpnum++;
                     }
                 }
-                
-                
-
-                // 떨어질 때쯤 점프 한번 더 할 수 있는 코드
-                // if(! isJumping){ 
-                //     isJumping = true;
-                //     rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-                //     anim.SetBool("is jumping", true);    
-                // }
-                // else{
-                //     if( rigid.velocity.y<-5f && downingflag==1){
-                //         anim.SetBool("is jumping", false);       
-                //         rigid.AddForce(Vector2.up * jumpPower*1.4f, ForceMode2D.Impulse);
-                //         anim.SetBool("is jumping", true);       
-                //         downingflag++;
-                //     }
-                // }
             }            
         }
 
@@ -159,21 +143,21 @@ public class playermove : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.Q)){ //testbutton
-            setLife(--life,false);
+            setLife(++life,true);
         }
         if(Input.GetKeyDown(KeyCode.W)){ //testbutton
-            GameDirector.coin_get_num++;
+            this.transform.position += new Vector3(20f, 0, 0);
         }
         if(Input.GetKeyDown(KeyCode.E)){ //testbutton
             this.transform.position += new Vector3(350f, 0, 0);
         }
-        
-            
-        
-
+                    
         //달 위치조정
         moon.transform.position = new Vector3(this.transform.position.x, 6.5f, 0);
 
+        
+
+        
         
 
     }//Update end
@@ -204,22 +188,23 @@ public class playermove : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);                
         wall.SetActive(true);
     }   
-    void setLife(int num,bool select){
+     void setLife(int num,bool select){
         Debug.Log(num+","+select);
         if(select){
-            if(num==5){top_heart5.SetActive(true);}
+            if(num==6){top_heart6.SetActive(true);}
+            else if(num==5){top_heart5.SetActive(true);}
             else if(num==4){top_heart4.SetActive(true);}
             else if(num==3){top_heart3.SetActive(true);}
             else if(num==2){top_heart2.SetActive(true);}
             else if(num==1){top_heart1.SetActive(true);}
         }
-        else{
-            if(num==4){top_heart5.SetActive(false);}
+        else{            
+            if(num==5){top_heart6.SetActive(false);}
+            else if(num==4){top_heart5.SetActive(false);}
             else if(num==3){top_heart4.SetActive(false);}
             else if(num==2){top_heart3.SetActive(false);}
             else if(num==1){top_heart2.SetActive(false);}
-            else if(num==0){top_heart1.SetActive(false);}
-            else if(num<0){
+            else if(num<1){
                 InitialGame.playerlist[InitialGame.playernum].score = GameDirector.coin_get_num;
                 GameDirector.rank_list.Add(InitialGame.playerlist[InitialGame.playernum]);
                 // GameDirector.player_score_list.Add(GameDirector.coin_get_num);
@@ -241,13 +226,11 @@ public class playermove : MonoBehaviour
             else{
                 Destroy(other.gameObject);
             }
-        }            
-        else if(other.gameObject.tag == "heart"){
-            Destroy(other.gameObject);
-            setLife(++life,true);                    
-        }
+        }     
+
+        
     }
-    void OnTriggerEnter2D(Collider2D other){
+    void OnTriggerEnter2D(Collider2D other){        
         if( (other.gameObject.name == "box1" && easter_i == 1) || (other.gameObject.name == "box2" && easter_i == 2)){
             easter_i++;
             for(int i=0; i<10; i++){
@@ -260,6 +243,12 @@ public class playermove : MonoBehaviour
         if(other.gameObject.name == "box3" && easter_i == 3){
             this.transform.position = new Vector3(150f, 5f, this.transform.position.z);
         }
+        if(other.gameObject.tag == "heart"){
+            Debug.Log("heart!!");
+            Destroy(other.gameObject);
+            setLife(++life,true);            
+        }       
+        
 
     }
 

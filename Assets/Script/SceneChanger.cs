@@ -11,7 +11,7 @@ public class SceneChanger : MonoBehaviour//clear씬에서 사용
 	}
 	public void ChangeSceneToStart(){
 		// Debug.Log("player "+GameDirector.player_name_list[InitialGame.playernum]+  "'s coin = "+GameDirector.coin_get_num);		
-		Destroy(GameObject.Find("BGM"));
+		Destroy(GameObject.Find("BGM"));		
 		SceneManager.LoadScene("Start");
 		Time.timeScale=1;
 	}

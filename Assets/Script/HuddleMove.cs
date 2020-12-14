@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class HuddleMove : MonoBehaviour
 {   
-    public GameObject player, jump_huddle;
+    public GameObject player, jump_huddle, huddle_coming;
     public float MoveSpeed;
     float[] huddlegenpos = {1,54f,109f,180f,217f,268f,364f};
     void Start()
     {
         player = GameObject.Find("player");
+        huddle_coming = GameObject.Find("huddle_coming");
         MoveSpeed = SelectMode.huddlespeed;
         jump_huddle.SetActive(false);
 
@@ -18,12 +19,22 @@ public class HuddleMove : MonoBehaviour
     
     void Update()
     {   
+
+
         if(player.transform.position.y > 0.34f){            
             jump_huddle.SetActive(true);
-            jump_huddle.transform.position = new Vector3(this.transform.localPosition.x - 0.7f,player.transform.position.y - 2.62f,this.transform.position.z);
+            jump_huddle.transform.position = new Vector3(this.transform.localPosition.x - 0.7f,player.transform.position.y - 2.9f,this.transform.position.z);
+            // if( player.transform.position.x - this.transform.position.x > -12f && player.transform.position.x - this.transform.position.x < -7f){            
+            //     huddle_coming.transform.localScale = new Vector3(0.5f, 1, 1f);
+            // }
+            // else{
+            //     huddle_coming.transform.localScale = new Vector3(0, 1, 1f);
+            // }   
         }
         else{
             jump_huddle.SetActive(false);   
+            // huddle_coming.transform.localScale = new Vector3(0, 1, 1f);
+            
         }
 
         if(Time.timeScale!=0){
